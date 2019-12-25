@@ -29,3 +29,8 @@ dotnet ef database update
 nodejs install first
 npm i -g @angular/cli
 ng new DatingApp-SPA
+
+npm i bootstrap fonta-awesome
+
+git status
+git init
