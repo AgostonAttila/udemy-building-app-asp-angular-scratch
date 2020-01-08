@@ -260,3 +260,4 @@ __pycache__/
 
 # Windows thumbnail cache files
 Thumbs.db
+DatingApp/DatingApp.API/appsettings.json

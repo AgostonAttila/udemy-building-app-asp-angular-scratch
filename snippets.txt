@@ -34,3 +34,13 @@ npm i bootstrap fonta-awesome
 
 git status
 git init
+
+dotnet add package Microsoft.IdentityModel.Tokens --version 5.6.0
+dotnet add package System.IdentityModel.Tokens.Jwt --version 5.6.0
+Microsoft.AspNetCore.Authentication.JwtBearer
+
+git rm appsettings.json --cached
+https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows
+dotnet user-secrets
+dotnet user-secrets set "AppSettings:Token" "super secret key"
+dotnet user-secrests list
