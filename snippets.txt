@@ -44,3 +44,9 @@ https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcor
 dotnet user-secrets
 dotnet user-secrets set "AppSettings:Token" "super secret key"
 dotnet user-secrests list
+
+
+AlertifyJS https://www.npmjs.com/package/alertifyjs  npm install @types/alertifyjs
+https://github.com/auth0/angular2-jwt
+https://valor-software.com/ngx-bootstrap/#/
+https://bootswatch.com/
