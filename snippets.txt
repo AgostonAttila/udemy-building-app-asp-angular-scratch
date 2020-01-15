@@ -50,3 +50,6 @@ AlertifyJS https://www.npmjs.com/package/alertifyjs  npm install @types/alertify
 https://github.com/auth0/angular2-jwt
 https://valor-software.com/ngx-bootstrap/#/
 https://bootswatch.com/
+
+
+ng g guard auth --skipTests
