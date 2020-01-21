@@ -20,7 +20,7 @@ namespace DatingApp.API.Migrations
 
             modelBuilder.Entity("DatingApp.API.Models.Photo", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateAdded")

@@ -65,3 +65,6 @@ dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version
 
 https://www.npmjs.com/package/ngx-gallery
 npm install ngx-gallery --save
+
+
+Cloudinary
