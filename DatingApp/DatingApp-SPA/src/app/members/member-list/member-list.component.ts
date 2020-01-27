@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/_services/user.service';
-import { AlertifyService } from 'src/app/_services/alertify.service';
-import { User } from 'src/app/_models/user';
+import { User } from '../../_models/user';
+import { UserService } from '../../_services/user.service';
+import { AlertifyService } from '../../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
-import { TabHeadingDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-member-list',
@@ -29,8 +28,8 @@ export class MemberListComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.users = data['user'].result;
-      this.pagination = data['pagination'].result;
+      this.users = data['users'].result;
+      this.pagination = data['users'].pagination;
     });
 
     this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
@@ -39,15 +38,15 @@ export class MemberListComponent implements OnInit {
     this.userParams.orderBy = 'lastActive';
   }
 
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadUsers();
+  }
+
   resetFilters() {
     this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
-    this.loadUsers();
-  }
-
-  pageChanged(event: any): void {
-    this.pagination.currentPage = event.page;
     this.loadUsers();
   }
 
