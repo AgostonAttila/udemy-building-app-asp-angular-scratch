@@ -32,7 +32,7 @@ export class UserService {
 
     let params = new HttpParams();
 
-    if (page !== null && itemsPerPage !== null) {
+    if (page != null && itemsPerPage != null) {
       params = params.append('pageNumber', page);
       params = params.append('pageSize', itemsPerPage);
     }
