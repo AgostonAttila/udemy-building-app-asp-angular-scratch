@@ -38,11 +38,6 @@ export class MemberListComponent implements OnInit {
     this.userParams.orderBy = 'lastActive';
   }
 
-  pageChanged(event: any): void {
-    this.pagination.currentPage = event.page;
-    this.loadUsers();
-  }
-
   resetFilters() {
     this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
@@ -66,5 +61,10 @@ export class MemberListComponent implements OnInit {
           this.alertify.error(error);
         }
       );
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadUsers();
   }
 }
