@@ -77,3 +77,17 @@ ngx datepicker
 https://www.npmjs.com/package/time-ago-pipe
 
 ngx pagination
+
+-----DEPLOY-----
+angularCLI
+angular.json - "outputPath": "../DatingApp.API/wwroot",
+
+ng build
+
+API default files,staticfiles +uj controller
+
+ng build --prod
+
+
+
+2 connection string
