@@ -89,5 +89,18 @@ API default files,staticfiles +uj controller
 ng build --prod
 
 
+Microsoft.EntityFrameworkCore.Proxies
+2 connection string + annotation a migrációnál
 
-2 connection string
+
+dotnet publish --configuration Release
+
+https://docs.microsoft.com/en-us/aspnet/core/tutorials/publish-to-iis?view=aspnetcore-3.1&tabs=visual-studio
+https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.1.1-windows-hosting-bundle-installer
+
+
+
+
+Identity
+
+Microsoft.AspNetCore.Identity.EntityFrameworkCore

@@ -10,11 +10,13 @@ using DatingApp.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DatingApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
@@ -41,8 +43,11 @@ namespace DatingApp.API.Controllers
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(createdUser);
 
-            return CreatedAtRoute("GetUser", new { controller = "Users", 
-                id = createdUser.Id }, userToReturn);
+            return CreatedAtRoute("GetUser", new
+            {
+                controller = "Users",
+                id = createdUser.Id
+            }, userToReturn);
         }
 
         [HttpPost("login")]
@@ -57,7 +62,7 @@ namespace DatingApp.API.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFromRepo.Username)
+                new Claim(ClaimTypes.Name, userFromRepo.UserName)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));

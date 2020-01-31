@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace DatingApp.API.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -77,31 +76,31 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("{id}/like/{recipientId}")]
-         public async Task<IActionResult> LikeUser(int id, int recipientId)
-         {
-             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                 return Unauthorized();
+        public async Task<IActionResult> LikeUser(int id, int recipientId)
+        {
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
 
-              var like = await _repo.GetLike(id, recipientId);
+            var like = await _repo.GetLike(id, recipientId);
 
-              if (like != null)
-                 return BadRequest("You already like this user");
+            if (like != null)
+                return BadRequest("You already like this user");
 
-              if (await _repo.GetUser(recipientId) == null)
-                 return NotFound();
+            if (await _repo.GetUser(recipientId) == null)
+                return NotFound();
 
-              like = new Like
-             {
-                 LikerId = id,
-                 LikeeId = recipientId
-             };
+            like = new Like
+            {
+                LikerId = id,
+                LikeeId = recipientId
+            };
 
-              _repo.Add<Like>(like);
+            _repo.Add<Like>(like);
 
-              if (await _repo.SaveAll())
-                 return Ok();
+            if (await _repo.SaveAll())
+                return Ok();
 
-              return BadRequest("Failed to like user");
-         }
+            return BadRequest("Failed to like user");
+        }
     }
 }
