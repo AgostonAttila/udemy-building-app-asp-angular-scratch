@@ -104,3 +104,8 @@ https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3
 Identity
 
 Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+https://valor-software.com/ngx-bootstrap/#/modals
+
+
+asp.net core global query filters
