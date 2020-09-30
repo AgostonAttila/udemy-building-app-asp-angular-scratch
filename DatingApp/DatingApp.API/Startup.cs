@@ -23,108 +23,108 @@ using AutoMapper;
 
 namespace DatingApp.API
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+   public class Startup
+   {
+      public Startup(IConfiguration configuration)
+      {
+         Configuration = configuration;
+      }
 
-        public IConfiguration Configuration { get; }
+      public IConfiguration Configuration { get; }
 
-        public void ConfigureDevelopmentServices(IServiceCollection services)
-        {
-            services.AddDbContext<DataContext>(x =>
+      public void ConfigureDevelopmentServices(IServiceCollection services)
+      {
+         services.AddDbContext<DataContext>(x =>
+         {
+            x.UseLazyLoadingProxies();
+            x.UseSqlite
+               (Configuration.GetConnectionString("DefaultConnection"));
+         });
+
+         ConfigureServices(services);
+      }
+
+      public void ConfigureProductionServices(IServiceCollection services)
+      {
+         services.AddDbContext<DataContext>(x =>
+         {
+            x.UseLazyLoadingProxies();
+            x.UseSqlServer
+               (Configuration.GetConnectionString("DefaultConnection"));
+         });
+
+         ConfigureServices(services);
+      }
+
+      public void ConfigureServices(IServiceCollection services)
+      {
+
+         services.AddControllers().AddNewtonsoftJson(opt =>
+         {
+            opt.SerializerSettings.ReferenceLoopHandling =
+               Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+         });
+         services.AddCors();
+         services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+         services.AddAutoMapper(typeof(DatingRepository).Assembly);
+         services.AddScoped<IAuthRepository, AuthRepository>();
+         services.AddScoped<IDatingRepository, DatingRepository>();
+         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+         .AddJwtBearer(options =>
+         {
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                x.UseLazyLoadingProxies();
-                x.UseSqlite
-                (Configuration.GetConnectionString("DefaultConnection"));
-            });
 
-            ConfigureServices(services);
-        }
+               ValidateIssuerSigningKey = true,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                   .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+               ValidateIssuer = false,
+               ValidateAudience = false,
+            };
+         });
+         services.AddScoped<LogUserActivity>();
+      }
 
-        public void ConfigureProductionServices(IServiceCollection services)
-        {
-            services.AddDbContext<DataContext>(x =>
+      // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+      public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+      {
+         if (env.IsDevelopment())
+         {
+            app.UseDeveloperExceptionPage();
+         }
+         else
+         {
+            app.UseExceptionHandler(builder =>
+            builder.Run(async context =>
             {
-                x.UseLazyLoadingProxies();
-                x.UseSqlServer
-                (Configuration.GetConnectionString("DefaultConnection"));
-            });
+               context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            ConfigureServices(services);
-        }
+               var error = context.Features.Get<IExceptionHandlerFeature>();
+               if (error != null)
+               {
+                  context.Response.AddApplicationError(error.Error.Message);
+                  await context.Response.WriteAsync(error.Error.Message);
+               }
+            }));
+         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
+         //app.UseHttpsRedirection();
 
-            services.AddControllers().AddNewtonsoftJson(opt =>
-            {
-                opt.SerializerSettings.ReferenceLoopHandling =
-                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
-            services.AddCors();
-            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
-            services.AddAutoMapper(typeof(DatingRepository).Assembly);
-            services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IDatingRepository, DatingRepository>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
+         app.UseRouting();
 
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                    .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-            services.AddScoped<LogUserActivity>();
-        }
+         app.UseAuthentication();
+         app.UseAuthorization();
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler(builder =>
-                builder.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+         app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-                    var error = context.Features.Get<IExceptionHandlerFeature>();
-                    if (error != null)
-                    {
-                        context.Response.AddApplicationError(error.Error.Message);
-                        await context.Response.WriteAsync(error.Error.Message);
-                    }
-                }));
-            }
+         app.UseDefaultFiles();
+         app.UseStaticFiles();
 
-            //app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapFallbackToController("Index", "Fallback");
-            });
-        }
-    }
+         app.UseEndpoints(endpoints =>
+         {
+            endpoints.MapControllers();
+            endpoints.MapFallbackToController("Index", "Fallback");
+         });
+      }
+   }
 }
