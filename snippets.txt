@@ -1,0 +1,111 @@
+VS 
+C#
+C# Extensions
+Nuget Package Manager
+
+Angular Snippets
+Angular Files
+Angular Language Service
+Angular2-Switcher
+
+Auto Rename Tag 
+Brackets Pair Colorizer 2
+Debugger Chrome
+Material Icon Theme
+Prettier
+TSLint
+
+
+dotnet add package Microsoft.EntityFrameworkCore --version 3.1.0
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 3.1.0
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.0
+
+dotnet tool install --global dotnet-ef
+dotnet ef -h
+dotnet ef migrations
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
+nodejs install first
+npm i -g @angular/cli
+ng new DatingApp-SPA
+
+npm i bootstrap fonta-awesome
+
+git status
+git init
+
+dotnet add package Microsoft.IdentityModel.Tokens --version 5.6.0
+dotnet add package System.IdentityModel.Tokens.Jwt --version 5.6.0
+Microsoft.AspNetCore.Authentication.JwtBearer
+
+git rm appsettings.json --cached
+https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows
+dotnet user-secrets
+dotnet user-secrets set "AppSettings:Token" "super secret key"
+dotnet user-secrests list
+
+
+AlertifyJS https://www.npmjs.com/package/alertifyjs  npm install @types/alertifyjs
+https://github.com/auth0/angular2-jwt
+https://valor-software.com/ngx-bootstrap/#/
+https://bootswatch.com/
+
+
+ng g guard auth --skipTests
+
+dotnet ef migrations list
+dotnet ef migrations remove
+dotnet ef database update ValamiMigrNev
+dotnet ef database drop
+
+dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --version 3.1.0
+
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 7.0.0
+
+https://www.npmjs.com/package/ngx-gallery
+npm install ngx-gallery --save
+
+
+Cloudinary
+
+
+ng2-file upload https://github.com/valor-software/ng2-file-upload
+
+ngx datepicker
+
+https://www.npmjs.com/package/time-ago-pipe
+
+ngx pagination
+
+-----DEPLOY-----
+angularCLI
+angular.json - "outputPath": "../DatingApp.API/wwroot",
+
+ng build
+
+API default files,staticfiles +uj controller
+
+ng build --prod
+
+
+Microsoft.EntityFrameworkCore.Proxies
+2 connection string + annotation a migrációnál
+
+
+dotnet publish --configuration Release
+
+https://docs.microsoft.com/en-us/aspnet/core/tutorials/publish-to-iis?view=aspnetcore-3.1&tabs=visual-studio
+https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.1.1-windows-hosting-bundle-installer
+
+
+
+
+Identity
+
+Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+https://valor-software.com/ngx-bootstrap/#/modals
+
+
+asp.net core global query filters
